@@ -1,7 +1,5 @@
 @(message: String)
-
-@main("Quiz") {
-
+@main("Quiz"){
 <div class="container">
 	<div class="row clearfix">
 		<div class="col-md-12 column">
@@ -13,11 +11,10 @@
 					Clique no botão e faça uma.<br>Created by Esdras.
 				</p>
 				<p>
-					<a class="btn btn-primary btn-lg" href="#">Criar</a>
+					<a class="btn btn-primary btn-lg" href="@routes.CadastroController.cadastro()">Criar</a>
 				</p>
 			</div>
 		</div>
 	</div>
 </div>
-		
 }

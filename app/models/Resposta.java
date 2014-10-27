@@ -1,6 +1,5 @@
 package models;
 
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.IdClass;
@@ -26,7 +25,4 @@ public class Resposta extends Model {
 	@ManyToOne
 	@JoinColumn(name="alternativa_id", referencedColumnName = "id",insertable = false, updatable = false)
 	public Alternativa alternativa;
-	
-	@Column(unique = true)
-	public String nicknameUser;
 }

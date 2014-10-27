@@ -1,0 +1,100 @@
+@import helper._
+
+@(form: Form[Pergunta])
+
+@perguntaField(field: Field, field2: Field,className: String = "alternativa") = {
+			@input(field, '_label -> "", '_class -> className) { (id, name, value, _) =>
+			    <div class="input-group">
+			      		<input id="@id" name="@name" class="form-control" type="text" value="@value">
+						 <span class="input-group-addon">
+				        	<input type="checkbox" id="@field2.id" name="@field2.name" > Correta
+				      	 </span>
+			    </div>
+			}
+}
+
+@main("Cadastro"){
+<div class="center borda">
+	@helper.form(action = routes.CadastroController.submit, 'id -> "form", 'class -> "form-horizontal") {
+		<fieldset>
+			<!-- Form Name -->
+			<legend>Pergunta</legend>
+
+			<!-- Text input-->
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="nickame"> 
+					Nick Name 
+				</label>
+				<div class="col-md-4">
+						@inputText(form("nikname"), args = 'class -> "form-control input-md" , '_label -> "")
+				</div>
+			</div>
+
+			<!-- Textarea -->
+			<div class="form-group">
+				<label class="col-md-2 control-label negrito" for="pergunta">Pergunta</label>
+				<div class="col-md-8">
+				
+					@textarea(form("pergunta"), args = 'class -> "form-control", '_label -> "" , 'rows -> 7)
+				
+				</div>
+			</div>
+			<div class="alternativas">
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="appendedcheckbox">Alternativas</label>
+			  			<div class="col-md-5">
+						@repeat(form("alternativas"), min = 1){ alternativa => 
+	   						<div id="local" class="input-group">
+									@perguntaField(alternativa("descricao"),alternativa("alternativaCerta"))
+							</div>
+									@perguntaField(alternativa("descricao"),alternativa("alternativaCerta"),"template")
+						}
+						</div>
+					</div>
+				
+			</div>
+
+				<!-- Button (Double) -->
+				<div class="form-group">
+				  <label class="col-md-2 control-label" for="addAlternativa"></label>
+				  <div class="col-md-8">
+				    <a id="addAlternativa" class="btn btn-primary">
+    					Adicionar alternativa
+    				</a>
+    				<input type="submit" class="btn btn-success" value="Enviar">
+				  </div>
+				</div>
+
+		</fieldset>
+	}
+</div>
+<script type="text/javascript">
+	var renumber = function(alternativas){
+		$(".alternativa").each(function(i){
+			$('input', this).each(function() {
+                $(this).attr('name', $(this).attr('name').replace(/alternativas\[.+?\]/g, 'alternativas[' + i + ']'))
+                $(this).attr('id', $(this).attr('id').replace(/alternativas\_.+?\_/g, 'alternativas_' + i + '_'))
+            })
+            $('label').each(function(){
+            	$(this).attr('for',$(this).attr('for').replace(/alternativas\_.+?\_/g, 'alternativas_' + i + '_'))
+            })
+            
+            $(this).attr('id',$(this).attr('id').replace(/alternativas\_.+?\_/g, 'alternativas_' + i + '_'))
+		})
+	}
+
+	$("#addAlternativa").click(function(e) {
+		var alter = $('.template').clone()
+		alter.attr('class',"alternativa")
+		alter.appendTo("#local")
+		renumber(alter)
+	});
+	
+	//  $("#local dl input:checkbox").click(function(){
+    //		var group = "input:checkbox[name='"+$(this).attr("name")+"']";
+    //		$(group).attr("checked",true);
+    //		$(this).attr("checked",false);
+	//	  });
+	
+</script>
+}

@@ -19,7 +19,7 @@ public class Alternativa extends Model {
 	
 	public String descricao;
 	
-	public boolean alternativaCerta;
+	public Boolean alternativaCerta;
 	
 	@ManyToOne
 	public Pergunta pergunta;

@@ -23,8 +23,7 @@ create table resposta (
   pergunta_id               bigint,
   alternativa_id            bigint,
   nickname_user             varchar(255),
-  constraint uq_resposta_nickname_user unique (nickname_user),
-  constraint pk_resposta primary key (pergunta_id, alternativa_id))
+  constraint pk_resposta primary key (pergunta_id, alternativa_id, nickname_user))
 ;
 
 alter table alternativa add constraint fk_alternativa_pergunta_1 foreign key (pergunta_id) references pergunta (id) on delete restrict on update restrict;
