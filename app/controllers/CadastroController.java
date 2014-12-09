@@ -7,6 +7,8 @@ import models.Pergunta;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.avaje.ebean.Ebean;
+
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -16,6 +18,10 @@ public class CadastroController extends Controller {
 
 	private static final Form<Pergunta> CADASTRO_FORM = Form.form(Pergunta.class);
 	 
+	public static Result pergutaSalva(String nomePergunta){
+		return ok(views.html.pergunta_salva.render(nomePergunta));
+	}
+	
 	public static Result cadastro(){
 		return ok(cadastro.render(CADASTRO_FORM));
 	}
@@ -32,8 +38,8 @@ public class CadastroController extends Controller {
 		    	String nickName = new BigInteger(130, random).toString(32);
 		    	pergunta.nikname = nickName;
 			}
-			pergunta.save();
-			return ok("Pergunta salva "+ pergunta);
+			Ebean.save(pergunta);
+			return redirect(routes.CadastroController.pergutaSalva(pergunta.nikname));
 		}
 	}
 }

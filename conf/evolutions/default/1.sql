@@ -4,15 +4,15 @@
 # --- !Ups
 
 create table alternativa (
-  id                        bigint auto_increment not null,
+  id                        bigint not null,
+  pergunta_id               bigint not null,
   descricao                 varchar(255),
-  alternativa_certa         tinyint(1) default 0,
-  pergunta_id               bigint,
+  alternativa_certa         boolean,
   constraint pk_alternativa primary key (id))
 ;
 
 create table pergunta (
-  id                        bigint auto_increment not null,
+  id                        bigint not null,
   nikname                   varchar(255),
   pergunta                  varchar(255),
   constraint uq_pergunta_nikname unique (nikname),
@@ -20,11 +20,16 @@ create table pergunta (
 ;
 
 create table resposta (
-  pergunta_id               bigint,
-  alternativa_id            bigint,
-  nickname_user             varchar(255),
-  constraint pk_resposta primary key (pergunta_id, alternativa_id, nickname_user))
+  pergunta_id               bigint not null,
+  alternativa_id            bigint not null,
+  nickname_user             varchar(255) not null)
 ;
+
+create sequence alternativa_seq;
+
+create sequence pergunta_seq;
+
+create sequence resposta_seq;
 
 alter table alternativa add constraint fk_alternativa_pergunta_1 foreign key (pergunta_id) references pergunta (id) on delete restrict on update restrict;
 create index ix_alternativa_pergunta_1 on alternativa (pergunta_id);
@@ -37,13 +42,19 @@ create index ix_resposta_alternativa_3 on resposta (alternativa_id);
 
 # --- !Downs
 
-SET FOREIGN_KEY_CHECKS=0;
+SET REFERENTIAL_INTEGRITY FALSE;
 
-drop table alternativa;
+drop table if exists alternativa;
 
-drop table pergunta;
+drop table if exists pergunta;
 
-drop table resposta;
+drop table if exists resposta;
 
-SET FOREIGN_KEY_CHECKS=1;
+SET REFERENTIAL_INTEGRITY TRUE;
+
+drop sequence if exists alternativa_seq;
+
+drop sequence if exists pergunta_seq;
+
+drop sequence if exists resposta_seq;
 

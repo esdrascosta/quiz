@@ -1,0 +1,10 @@
+@(pergunta: String)
+@main("Pergunta salva"){
+<div class="container">
+	<h2>Acesse a pergunta no Link abaixo</h2>
+	
+	 <a href="@routes.RespostaController.quiz(pergunta)">
+	 	@routes.RespostaController.quiz(pergunta)
+	 </a>
+ </div>
+}

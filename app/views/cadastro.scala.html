@@ -1,54 +1,64 @@
 @import helper._
-
-@(form: Form[Pergunta])
+@import helper.twitterBootstrap._
+@(perguntaForm: Form[Pergunta])
 
 @perguntaField(field: Field, field2: Field,className: String = "alternativa") = {
-			@input(field, '_label -> "", '_class -> className) { (id, name, value, _) =>
-			    <div class="input-group">
-			      		<input id="@id" name="@name" class="form-control" type="text" value="@value">
-						 <span class="input-group-addon">
-				        	<input type="checkbox" id="@field2.id" name="@field2.name" > Correta
-				      	 </span>
+			   <br/>	
+			   <div class="@className">
+				    <div class="input-group">
+				      		
+				      		<input id="@if(field == null){alternativas_0_.descricao}else{@field.id}" 
+				      		       name="@if(field == null){alternativas[0].descricao}else{@field.name}" 
+				      		       class="form-control" type="text" value="@if(field != null){@field.value}">
+				      		       
+							 <span class="input-group-addon">
+					        	<input type="checkbox" 
+					        	       id="@if(field2 == null){alternativas_0_.alternativaCerta}else{@field2.id}" 
+					        	       name="@if(field2 == null){alternativas[0].alternativaCerta}else{@field2.name}" > Correta
+					      	 </span>
+				    </div>
+				    	@if(field != null){
+					    	@for(error <- field.errors){  
+							   <span style= "color:red" >@error.message </span>  
+						    } 
+				    	}
 			    </div>
-			}
 }
 
 @main("Cadastro"){
 <div class="center borda">
-	@helper.form(action = routes.CadastroController.submit, 'id -> "form", 'class -> "form-horizontal") {
+	@form(action = routes.CadastroController.submit, 'id -> "form", 'class -> "form-horizontal") {
+		
 		<fieldset>
 			<!-- Form Name -->
 			<legend>Pergunta</legend>
 
 			<!-- Text input-->
 			<div class="form-group">
-				<label class="col-md-2 control-label" for="nickame"> 
-					Nick Name 
-				</label>
 				<div class="col-md-4">
-						@inputText(form("nikname"), args = 'class -> "form-control input-md" , '_label -> "")
+						@inputText(perguntaForm("nikname"), args = 'class -> "form-control input-md" , '_label -> "Nick Name")
 				</div>
 			</div>
 
 			<!-- Textarea -->
 			<div class="form-group">
-				<label class="col-md-2 control-label negrito" for="pergunta">Pergunta</label>
 				<div class="col-md-8">
 				
-					@textarea(form("pergunta"), args = 'class -> "form-control", '_label -> "" , 'rows -> 7)
+					@textarea(perguntaForm("pergunta"), args = 'class -> "form-control", '_label -> "Pergunta" , 'rows -> 7)
 				
 				</div>
 			</div>
 			<div class="alternativas">
 					<div class="form-group">
-						<label class="col-md-2 control-label" for="appendedcheckbox">Alternativas</label>
-			  			<div class="col-md-5">
-						@repeat(form("alternativas"), min = 1){ alternativa => 
+			  			<div class="col-md-8">
+						<label for="appendedcheckbox">Alternativas</label>
 	   						<div id="local" class="input-group">
-									@perguntaField(alternativa("descricao"),alternativa("alternativaCerta"))
+							@repeat(perguntaForm("alternativas"), min = 2){ alternativa => 
+								@perguntaField(alternativa("descricao"),alternativa("alternativaCerta"))
+								
+							}
+							@perguntaField(null,null,"template")
 							</div>
-									@perguntaField(alternativa("descricao"),alternativa("alternativaCerta"),"template")
-						}
 						</div>
 					</div>
 				
@@ -56,7 +66,7 @@
 
 				<!-- Button (Double) -->
 				<div class="form-group">
-				  <label class="col-md-2 control-label" for="addAlternativa"></label>
+				  
 				  <div class="col-md-8">
 				    <a id="addAlternativa" class="btn btn-primary">
     					Adicionar alternativa
@@ -78,8 +88,6 @@
             $('label').each(function(){
             	$(this).attr('for',$(this).attr('for').replace(/alternativas\_.+?\_/g, 'alternativas_' + i + '_'))
             })
-            
-            $(this).attr('id',$(this).attr('id').replace(/alternativas\_.+?\_/g, 'alternativas_' + i + '_'))
 		})
 	}
 
@@ -89,12 +97,6 @@
 		alter.appendTo("#local")
 		renumber(alter)
 	});
-	
-	//  $("#local dl input:checkbox").click(function(){
-    //		var group = "input:checkbox[name='"+$(this).attr("name")+"']";
-    //		$(group).attr("checked",true);
-    //		$(this).attr("checked",false);
-	//	  });
 	
 </script>
 }

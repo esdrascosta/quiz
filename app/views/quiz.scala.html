@@ -1,0 +1,37 @@
+@import helper._ 
+@(respostaForm: Form[Resposta],pergunta: Pergunta)
+
+@main("Cadastro"){
+	@form(action = routes.RespostaController.submit, 'id -> "form", 'class -> "form-horizontal") {
+		<div class="center borda">
+			<h1>@pergunta.pergunta</h1>
+			<br /> 
+			
+			<input type="hidden" id="@respostaForm("perguntaId").id" name="@respostaForm("perguntaId").name" value="@pergunta.id" />
+			<input type="hidden" id="@respostaForm("pergunta.nikname").id" name="@respostaForm("pergunta.nikname").name" value="@pergunta.nikname" />
+			
+			<div class="form-group">
+				<div class="col-md-4">
+				@inputText(respostaForm("nicknameUser"),'_label -> "Apelido Usuario",'class -> "form-control input-md")
+			 	</div>
+			</div>
+			
+			
+			<div class="form-group">
+				<div class="col-md-8">
+					@inputRadioGroup(
+						respostaForm("alternativaId"), 
+						options = pergunta.alternativas.map(x => x.id.toString -> x.descricao).toSeq, '_label -> "Alternativas")
+				</div>
+			</div>
+		
+			<div class="form-group">
+				<div class="col-md-8">
+					<input type="submit" class="btn btn-success" value="Enviar">
+				</div>
+			</div>
+		</div>
+		
+		
+	}
+}
