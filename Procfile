@@ -1,0 +1,1 @@
+web: target/universal/stage/bin/quiz -Dhttp.port=${PORT} -DapplyEvolutions.default=true
