@@ -95,14 +95,8 @@ public class RespostaController extends Controller {
 
 	public static WebSocket<JsonNode> webInfo() {
 
-		return new WebSocket<JsonNode>() {
-
-			@Override
-			public void onReady(In<JsonNode> in, Out<JsonNode> out) {
-
+		return WebSocket.whenReady((in, out) -> {
 				register(UUID.randomUUID().toString(), in, out);
-
-			}
-		};
+			});
 	}
 }
