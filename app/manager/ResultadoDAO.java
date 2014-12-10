@@ -15,12 +15,12 @@ public class ResultadoDAO {
 		 
 		StringBuilder query = new StringBuilder();
 		
-		query.append("select descricao_alternativa, count(alternativa_id) quantidade_resposta " );
+		query.append("select alt.descricao as descricao_alternativa, count(alternativa_id) as quantidade_resposta " );
 		query.append("from resposta resp inner join alternativa alt on ");
 		query.append("						resp.alternativa_id = alt.id ");
 		query.append("					  inner join pergunta perg on ");
 		query.append("						resp.pergunta_id = perg.id ");
-		query.append("where perg.nikname = :nickname group by alternativa_id");
+		query.append("where perg.nikname = :nickname group by descricao_alternativa");
 		
 		SqlQuery sqlQuery = Ebean.createSqlQuery( query.toString());
 		sqlQuery.setParameter("nickname", perguntaNikName);
