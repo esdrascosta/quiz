@@ -1,7 +1,7 @@
 @import helper._ 
 @(respostaForm: Form[Resposta],pergunta: Pergunta)
 
-@main("Cadastro"){
+@main("Quiz"){
 	@form(action = routes.RespostaController.submit, 'id -> "form", 'class -> "form-horizontal") {
 		<div class="center borda">
 			<h1>@pergunta.pergunta</h1>

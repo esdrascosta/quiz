@@ -13,7 +13,7 @@
 
 		var WS = window['MozWebSocket'] ? window['MozWebSocket'] : WebSocket;
 
-		var socket = new WS("@routes.RespostaController.webInfo().webSocketURL(request)");
+		var socket = new WS('@routes.RespostaController.webInfo().webSocketURL(request)');
 
 		socket.onmessage = function(event){
 			var resultado = JSON.parse(event.data);
@@ -26,7 +26,7 @@
 		           type: 'POST',  
 		           dataType: 'json',  
 		           contentType: 'application/json',  
-		           url: "@routes.RespostaController.respostasJson(perguntaNickName)",  
+		           url: '@routes.RespostaController.respostasJson(perguntaNickName)',  
 		           data: '{}',  
 		           success: drawChart 
 				});
@@ -36,8 +36,8 @@
 		function drawChart(resultado) {
 
 		   	var data = new google.visualization.DataTable();
-			data.addColumn('string', 'Task');
-			data.addColumn('number', 'Hours per Day');
+			data.addColumn('string', 'Alternativa');
+			data.addColumn('number', 'Quantidade de Votos');
 			      
 			for(var i = 0; i < resultado.length; i++){
 			   data.addRow([resultado[i].alternativa,resultado[i].quantidade]);

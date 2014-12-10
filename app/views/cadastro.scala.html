@@ -1,8 +1,7 @@
 @import helper._
-@import helper.twitterBootstrap._
 @(perguntaForm: Form[Pergunta])
 
-@perguntaField(field: Field, field2: Field,className: String = "alternativa") = {
+@perguntaField(field: Field,className: String = "alternativa") = {
 			   <br/>	
 			   <div class="@className">
 				    <div class="input-group">
@@ -10,12 +9,7 @@
 				      		<input id="@if(field == null){alternativas_0_.descricao}else{@field.id}" 
 				      		       name="@if(field == null){alternativas[0].descricao}else{@field.name}" 
 				      		       class="form-control" type="text" value="@if(field != null){@field.value}">
-				      		       
-							 <span class="input-group-addon">
-					        	<input type="checkbox" 
-					        	       id="@if(field2 == null){alternativas_0_.alternativaCerta}else{@field2.id}" 
-					        	       name="@if(field2 == null){alternativas[0].alternativaCerta}else{@field2.name}" > Correta
-					      	 </span>
+							 
 				    </div>
 				    	@if(field != null){
 					    	@for(error <- field.errors){  
@@ -54,10 +48,10 @@
 						<label for="appendedcheckbox">Alternativas</label>
 	   						<div id="local" class="input-group">
 							@repeat(perguntaForm("alternativas"), min = 2){ alternativa => 
-								@perguntaField(alternativa("descricao"),alternativa("alternativaCerta"))
+								@perguntaField(alternativa("descricao"))
 								
 							}
-							@perguntaField(null,null,"template")
+							@perguntaField(null,"template")
 							</div>
 						</div>
 					</div>
