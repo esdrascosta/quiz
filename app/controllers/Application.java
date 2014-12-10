@@ -9,8 +9,4 @@ public class Application extends Controller {
     public static Result index() {
         return ok(index.render("Your new application is ready."));
     }
-    
-    public static Result graphJs(String name){
-    	return ok(views.js.ws.render(name));
-    }
 }
