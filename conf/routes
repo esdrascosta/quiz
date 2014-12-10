@@ -19,7 +19,7 @@ GET /resultado/:nickname				controllers.RespostaController.resultado(nickname: S
 
 
 GET /resposta/websocket					controllers.RespostaController.webInfo()
-GET /graphJs/:name						controllers.Application.graphJs(name: String)
+
 
 
 # Map static resources from the /public folder to the /assets URL path
