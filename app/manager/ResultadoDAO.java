@@ -15,7 +15,7 @@ public class ResultadoDAO {
 		 
 		StringBuilder query = new StringBuilder();
 		
-		query.append("select alt.descricao descricao_alternativa, count(alternativa_id) quantidade_resposta " );
+		query.append("select descricao_alternativa, count(alternativa_id) quantidade_resposta " );
 		query.append("from resposta resp inner join alternativa alt on ");
 		query.append("						resp.alternativa_id = alt.id ");
 		query.append("					  inner join pergunta perg on ");

@@ -8,7 +8,7 @@ GET     /                               controllers.Application.index()
 #cadastro
 GET 	/cadastro						controllers.CadastroController.cadastro()
 POST    /submit							controllers.CadastroController.submit()
-GET /perguntasalva/:name				controllers.CadastroController.pergutaSalva(name: String)
+GET     /perguntasalva/:name			controllers.CadastroController.pergutaSalva(name: String)
 
 #resposta
 GET /quiz/:name							controllers.RespostaController.quiz(name: String)
