@@ -1,7 +1,10 @@
+# --- Created by Ebean DDL
+# To stop Ebean DDL generation, remove this comment and start using Evolutions
+
 # --- !Ups
 
 create table alternativa (
-  id                        bigint auto_increment not null,
+  id                        bigint not null,
   pergunta_id               bigint not null,
   descricao                 varchar(255),
   alternativa_certa         boolean,
@@ -9,7 +12,7 @@ create table alternativa (
 ;
 
 create table pergunta (
-  id                        bigint auto_increment not null,
+  id                        bigint not null,
   nikname                   varchar(255),
   pergunta                  varchar(255),
   constraint uq_pergunta_nikname unique (nikname),
